@@ -5,6 +5,7 @@ import '../../node_modules/leaflet/dist/leaflet.css';
 
 // Dependent components
 import MapComponent from './map/map.component'
+import SearchComponent from './search/search.component'
 
 let app = () => {
   return {
@@ -22,7 +23,7 @@ class AppCtrl {
 
 const MODULE_NAME = 'app';
 
-angular.module(MODULE_NAME, ['app-map'])
+angular.module(MODULE_NAME, ['app-map', 'app-search'])
   .directive('app', app)
   .controller('AppCtrl', AppCtrl);
 
