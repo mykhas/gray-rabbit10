@@ -12,15 +12,6 @@ class MapController {
         }).addTo(this.map);
 
         this.addMarkersForAll();
-
-        // Just for any case, OSM tiles:
-        // 
-        // var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-        // var osmAttrib='Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
-        // var osm = new L.TileLayer(osmUrl, {minZoom: 8, maxZoom: 12, attribution: osmAttrib});
-
-        // this.map.setView(new L.LatLng(51.3, 0.7),9);
-	    // this.map.addLayer(osm);
     }
 
     addMarkersForAll() {
