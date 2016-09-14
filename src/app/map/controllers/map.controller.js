@@ -1,5 +1,5 @@
 import leaflet from 'leaflet';
-// import leaflet-knn from 'leaflet-knn';
+import leafletKnn from 'leaflet-knn';
 import markers from '../../data/coordinates.js';
 import SearchService from '../../search/services/search.service';
 L.Icon.Default.imagePath = 'img/leaflet';
@@ -13,19 +13,31 @@ class MapController {
             accessToken: 'pk.eyJ1Ijoia29iZXJueWsiLCJhIjoiY2l0MWpibXZzMDA5dTJ6bzMxMXpuazAzbCJ9.zZsFHtrmX06E80GKKoKHqg'
         }).addTo(this.map);
 
-        this.addMarkersForAll();
+        let geoJSONPoints = markers.map(marker => {
+            return {
+                type: "Point",
+                coordinates: [marker.lon, marker.lat]
+            }
+        });
+        this.geoJSON = L.geoJson(geoJSONPoints);
+        this.findClosestMarker();
 
-        this.map.on('click', this.findClosestMarker);
+        this.map.on('click', this.findClosestMarker.bind(this));
     }
 
-    findClosestMarker() {
-        console.log('We are looking for closest marker');
+    findClosestMarker(e) {
+        let latLng = e ? e.latlng : {lat: 50.45, lon: 30.52};
+        L.marker(latLng).addTo(this.map);
+        let nearest = leafletKnn(this.geoJSON).nearest(L.latLng(latLng), 1);
+
+        this.addMarkersForAll(nearest);
     }
 
-    addMarkersForAll() {
+    addMarkersForAll(markers) {
         markers.map(marker => {
-            marker.node = L.marker([marker.lat, marker.lng]).addTo(this.map);
-            marker.node.bindPopup(marker.title);
+            console.log('in marker', marker);
+            marker.node = L.marker({lat: marker.lat, lon: marker.lon}).addTo(this.map);
+            marker.title && marker.node.bindPopup(marker.title);
             return marker;
         });
     }
