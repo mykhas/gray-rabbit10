@@ -1,6 +1,6 @@
 class SearchController {
     constructor() {
-
+        
     }
 }
 
