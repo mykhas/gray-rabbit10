@@ -15,7 +15,8 @@ class SearchService {
     clear() {
         this.points.map(point => {
             this.map.removeLayer(point.node);
-        })
+        });
+        this.points = [];
     }
 
     processSearch() {
