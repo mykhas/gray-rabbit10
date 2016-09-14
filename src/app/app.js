@@ -1,5 +1,7 @@
 import angular from 'angular';
 
+import '../style/normalize.css';
+import '../style/skeleton.css';
 import '../style/app.css';
 import '../../node_modules/leaflet/dist/leaflet.css';
 
@@ -17,7 +19,7 @@ let app = () => {
 
 class AppCtrl {
   constructor() {
-    this.url = 'https://github.com/preboot/angular-webpack';
+    // app constructor
   }
 }
 
