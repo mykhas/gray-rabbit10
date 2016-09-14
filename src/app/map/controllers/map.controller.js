@@ -20,7 +20,6 @@ class MapController {
             }
         });
         this.geoJSON = L.geoJson(geoJSONPoints);
-        this.findClosestMarker();
 
         this.map.on('click', this.findClosestMarker.bind(this));
     }
