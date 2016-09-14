@@ -1,4 +1,6 @@
 import leaflet from 'leaflet';
+import markers from '../../data/coordinates.js';
+L.Icon.Default.imagePath = 'img/leaflet';
 
 class MapController {
     constructor() {
@@ -9,6 +11,8 @@ class MapController {
             accessToken: 'pk.eyJ1Ijoia29iZXJueWsiLCJhIjoiY2l0MWpibXZzMDA5dTJ6bzMxMXpuazAzbCJ9.zZsFHtrmX06E80GKKoKHqg'
         }).addTo(this.map);
 
+        this.addMarkersForAll();
+
         // Just for any case, OSM tiles:
         // 
         // var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
@@ -17,6 +21,13 @@ class MapController {
 
         // this.map.setView(new L.LatLng(51.3, 0.7),9);
 	    // this.map.addLayer(osm);
+    }
+
+    addMarkersForAll() {
+        markers.map(marker => {
+            marker.onMap = L.marker([marker.lat, marker.lng]).addTo(this.map);
+            return marker;
+        });
     }
 }
 
