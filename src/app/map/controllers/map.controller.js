@@ -1,5 +1,7 @@
 import leaflet from 'leaflet';
+// import leaflet-knn from 'leaflet-knn';
 import markers from '../../data/coordinates.js';
+import SearchService from '../../search/services/search.service';
 L.Icon.Default.imagePath = 'img/leaflet';
 
 class MapController {
@@ -12,11 +14,18 @@ class MapController {
         }).addTo(this.map);
 
         this.addMarkersForAll();
+
+        this.map.on('click', this.findClosestMarker);
+    }
+
+    findClosestMarker() {
+        console.log('We are looking for closest marker');
     }
 
     addMarkersForAll() {
         markers.map(marker => {
-            marker.onMap = L.marker([marker.lat, marker.lng]).addTo(this.map);
+            marker.node = L.marker([marker.lat, marker.lng]).addTo(this.map);
+            marker.node.bindPopup(marker.title);
             return marker;
         });
     }
