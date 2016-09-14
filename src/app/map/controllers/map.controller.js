@@ -21,24 +21,16 @@ class MapController {
         });
         this.geoJSON = L.geoJson(geoJSONPoints);
 
+        this.searchService = new SearchService(this.map);
+
         this.map.on('click', this.findClosestMarker.bind(this));
     }
 
     findClosestMarker(e) {
         let latLng = e ? e.latlng : {lat: 50.45, lon: 30.52};
-        L.marker(latLng).addTo(this.map);
-        let nearest = leafletKnn(this.geoJSON).nearest(L.latLng(latLng), 1);
+        let nearestPoint = leafletKnn(this.geoJSON).nearest(L.latLng(latLng), 1)[0];
 
-        this.addMarkersForAll(nearest);
-    }
-
-    addMarkersForAll(markers) {
-        markers.map(marker => {
-            console.log('in marker', marker);
-            marker.node = L.marker({lat: marker.lat, lon: marker.lon}).addTo(this.map);
-            marker.title && marker.node.bindPopup(marker.title);
-            return marker;
-        });
+        this.searchService.addPoint(nearestPoint);
     }
 }
 
