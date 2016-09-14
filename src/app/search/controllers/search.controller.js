@@ -1,8 +1,19 @@
 import SearchService from '../services/search.service';
 
 class SearchController {
-    constructor() {
-        this.searchService = {};
+    constructor($scope) {
+        $scope.$watch(() => this.searchService, (newVal) => {
+            newVal && newVal.subject.subscribe(points => {
+                this.points = points;
+                if (points.length) {
+                    $scope.$apply();
+                }
+            })
+        });
+    }
+
+    getPoints() {
+        console.log('points: ', this.points);
     }
 
     clear() {

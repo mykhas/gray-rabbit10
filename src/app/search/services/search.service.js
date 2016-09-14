@@ -1,7 +1,10 @@
+import Rx from 'rxjs/Rx';
+
 class SearchService {
     constructor(map) {
         this.map = map;
         this.points = [];
+        this.subject = new Rx.Subject(); // primitive subscriber implementation
     }
 
     addPoint(point) {
@@ -10,6 +13,7 @@ class SearchService {
         }
         this.points.push(point);
         this._addMarker(point);
+        this.subject.next(this.points);
     }
     
     clear() {
@@ -17,6 +21,7 @@ class SearchService {
             this.map.removeLayer(point.node);
         });
         this.points = [];
+        this.subject.next(this.points);        
     }
 
     processSearch() {
