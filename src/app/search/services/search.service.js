@@ -1,4 +1,6 @@
 import Rx from 'rxjs/Rx';
+import GraphFactory from './graphFactory.service';
+import DijstraService from './dijkstra.service';
 
 class SearchService {
     constructor(map) {
