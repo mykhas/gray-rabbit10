@@ -36,11 +36,9 @@ class SearchService {
                 this.points[1].layer.feature.geometry.properties._id
             );
 
-            points = points
-                .filter(point => path.includes(point._id))
+            points = path
+                .map(point => points.find(element => element._id === point))
                 .map(point => this._addMarker(point, true));
-
-            console.log(points);
 
             this._addPath(points);
         });

@@ -11,9 +11,7 @@ class DijkstraService {
         this.parents = [];
     }
 
-    getPath(a, b) {
-        console.log('a', a);
-        console.log('b', b);
+    getPath(a, b) {      
         // Initializing
         Object.keys(this.graph.nodes).forEach(key => {
             this.parents[key] = null;
@@ -22,7 +20,7 @@ class DijkstraService {
                 this.queue.enqueue(0, key);
             } else {
                 this.distances[key] = INFINITY;
-                this.queue.enqueue(INFINITY, key);                
+                this.queue.enqueue(INFINITY, key);
             }
         });
 
@@ -45,6 +43,7 @@ class DijkstraService {
             }
         }
 
+        this.path.push(a);
         return this.path;
     }
 
