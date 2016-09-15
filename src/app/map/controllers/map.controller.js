@@ -16,7 +16,10 @@ class MapController {
         let geoJSONPoints = markers.map(marker => {
             return {
                 type: "Point",
-                coordinates: [marker.lon, marker.lat]
+                coordinates: [marker.lon, marker.lat],
+                properties: {
+                    title: marker.title
+                },
             }
         });
         this.geoJSON = L.geoJson(geoJSONPoints);
@@ -29,6 +32,7 @@ class MapController {
     findClosestMarker(e) {
         let latLng = e ? e.latlng : {lat: 50.45, lon: 30.52};
         let nearestPoint = leafletKnn(this.geoJSON).nearest(L.latLng(latLng), 1)[0];
+        console.log(nearestPoint);
 
         this.searchService.addPoint(nearestPoint);
     }
