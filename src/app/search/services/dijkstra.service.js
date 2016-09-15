@@ -25,36 +25,43 @@ class DijkstraService {
         });
 
         // Processing
-        let smallest, alt;
-        while(!this.queue.isEmpty()) {
-            smallest = this.queue.dequeue();
+        let currentPoint, alt;
+        while (!this.queue.isEmpty()) {
+            currentPoint = this.queue.dequeue();
 
-            if(smallest === b) {
-                while(this.parents[smallest]) {
-                    this.path.push(smallest);
-                    smallest = this.parents[smallest];
-                }
-
+            if (currentPoint === b) {
+                this._finishIteration(currentPoint);
                 break;
             }
 
-            if(!smallest || this.distances[smallest] === INFINITY){
+            if (!currentPoint || this.distances[currentPoint] === INFINITY) {
                 continue;
             }
 
-            for(let neighbor in this.graph.nodes[smallest]) {
-                alt = this.distances[smallest] + this.graph.nodes[smallest][neighbor];
-
-                if(alt < this.distances[neighbor]) {
-                    this.distances[neighbor] = alt;
-                    this.parents[neighbor] = smallest;
-
-                    this.queue.enqueue(alt, neighbor);
-                }
+            for (let neighbor in this.graph.nodes[currentPoint]) {
+                this._tryNewDistance(currentPoint, neighbor);
             }
         }
 
         return this.path;
+    }
+
+    _tryNewDistance(currentPoint, neighbor) {
+        let alt = this.distances[currentPoint] + this.graph.nodes[currentPoint][neighbor];
+
+        if (alt < this.distances[neighbor]) {
+            this.distances[neighbor] = alt;
+            this.parents[neighbor] = currentPoint;
+
+            this.queue.enqueue(alt, neighbor);
+        }
+    }
+
+    _finishIteration(currentPoint) {
+        while (this.parents[currentPoint]) {
+            this.path.push(currentPoint);
+            currentPoint = this.parents[currentPoint];
+        }
     }
 }
 
