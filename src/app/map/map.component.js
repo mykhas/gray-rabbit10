@@ -11,6 +11,6 @@ const MapComponent = {
     },
 };
 
-angular.module('app-map', []).component(COMPONENT_NAME, MapComponent);
+angular.module('app-map', ['ngResource']).component(COMPONENT_NAME, MapComponent);
 
 export default MapComponent;

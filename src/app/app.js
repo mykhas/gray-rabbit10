@@ -1,4 +1,5 @@
 import angular from 'angular';
+import ngResource from 'angular-resource';
 
 import '../style/normalize.css';
 import '../style/skeleton.css';
