@@ -27,7 +27,7 @@ class SearchService {
     }
 
     processSearch(pointsModel) {
-        console.log('Search processing', pointsModel);
+        let graph = new GraphFactory(pointsModel);
     }
 
     _addMarker(marker) {

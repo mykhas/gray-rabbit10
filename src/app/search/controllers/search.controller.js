@@ -11,7 +11,6 @@ class SearchController {
     }
 
     calculateRoute() {
-        console.log('points: ', this.points);
         this.searchService.processSearch(this.pointsModel)
     }
 

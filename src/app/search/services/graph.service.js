@@ -1,10 +1,10 @@
 class Graph {
     constructor() {
-        this.nodes = [];
+        this.nodes = {};
     }
 
-    addNode() {
-        
+    addNode(key, neighbors) {
+        this.nodes[key] = neighbors;
     }
 }
 
