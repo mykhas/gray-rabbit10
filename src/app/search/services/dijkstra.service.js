@@ -12,6 +12,8 @@ class DijkstraService {
     }
 
     getPath(a, b) {
+        console.log('a', a);
+        console.log('b', b);
         // Initializing
         Object.keys(this.graph.nodes).forEach(key => {
             this.parents[key] = null;

@@ -4,14 +4,13 @@ import SearchService from '../../search/services/search.service';
 import PointsModel from '../services/pointsModel.service';
 L.Icon.Default.imagePath = 'img/leaflet';
 
-let markers;
-
 class MapController {
     constructor($resource) {
+        this.markers = [];
         this.pointsModel = new PointsModel($resource);
         this.pointsModel.query(result => {
-            markers = result;
-            let geoJSONPoints = markers.map(marker => {
+            this.markers = result;
+            let geoJSONPoints = this.markers.map(marker => {
                 return {
                     type: "Point",
                     coordinates: [marker.lon, marker.lat],
@@ -37,10 +36,28 @@ class MapController {
     }
 
     findClosestMarker(e) {
-        let latLng = e ? e.latlng : {lat: 50.45, lon: 30.52};
+        console.log(e);
+        let latLng = e ? e.latlng : {lat: 50.45, lng: 30.52};
         let nearestPoint = leafletKnn(this.geoJSON).nearest(L.latLng(latLng), 1)[0];
 
         this.searchService.addPoint(nearestPoint);
+    }
+
+    selectPoint(marker) {
+        // TODO: fix this method
+        let json = {
+            type: "Point",
+            coordinates: [marker.lon, marker.lat],
+            properties: {
+                _id: marker._id,
+                title: marker.title
+            },
+        };
+        let result = leafletKnn(L.geoJson(json)).nearest(L.latLng([marker.lon, marker.lat]), 1)[0];
+
+        this.searchService.addPoint(result);
+        delete this.selectedPoint1;
+        delete this.selectedPoint2;
     }
 }
 

@@ -4,7 +4,9 @@ class SearchController {
             newVal && newVal.subject.subscribe(points => {
                 this.points = points;
                 if (points.length) {
-                    $scope.$apply();
+                    try { // TODO: fix it
+                        $scope.$apply();
+                    } catch(e) { }
                 }
             })
         });

@@ -4,7 +4,7 @@ const COMPONENT_NAME = 'mapComponent';
 
 const MapComponent = {
     controller: MapController,
-    controllerAs: 'mpvc',
+    controllerAs: 'mpvm',
     template: require('./views/map.component.html'),
     bindings: {
         searchService: '=',
