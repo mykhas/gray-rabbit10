@@ -5,7 +5,8 @@ import PointsModel from '../services/pointsModel.service';
 L.Icon.Default.imagePath = 'img/leaflet';
 
 class MapController {
-    constructor($resource) {
+    constructor($resource, $scope) {
+        this.$scope = $scope;
         this.markers = [];
         this.pointsModel = new PointsModel($resource);
         this.pointsModel.query(result => {
@@ -42,6 +43,7 @@ class MapController {
         let marker = this.markers.find(marker => marker._id === nearestPoint.layer.feature.geometry.properties._id);
 
         this.searchService.addPoint(marker);
+        this.$scope.$apply();
     }
 
     selectPoint(marker) {

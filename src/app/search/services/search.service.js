@@ -32,8 +32,8 @@ class SearchService {
             let graph = graphFactory.processGraph(points);
             let dijkstra = new DijkstraService(graph);
             let path = dijkstra.getPath(
-                this.points[0].layer.feature.geometry.properties._id,
-                this.points[1].layer.feature.geometry.properties._id
+                this.points[0]._id,
+                this.points[1]._id
             );
 
             points = path
