@@ -1,12 +1,6 @@
 import Graph from './graph.service';
 
 class GraphFactory {
-    constructor(pointsModel) {
-        pointsModel.query(result => {
-            this.processGraph(result);
-        });
-    }
-
     processGraph(points) {
         let graph = new Graph();
 

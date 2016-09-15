@@ -16,6 +16,7 @@ class MapController {
                     type: "Point",
                     coordinates: [marker.lon, marker.lat],
                     properties: {
+                        _id: marker._id,
                         title: marker.title
                     },
                 }

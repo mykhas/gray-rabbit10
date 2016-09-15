@@ -1,5 +1,61 @@
-class DijstraService {
+import PriorityQueue from './priorityQueue.service';
 
+const INFINITY = 1/0;
+
+class DijkstraService {
+    constructor(graph) {
+        this.graph = graph;
+        this.queue = new PriorityQueue();
+        this.distances = {};
+        this.path = [];
+        this.parents = [];
+    }
+
+    getPath(a, b) {
+        // Initializing
+        Object.keys(this.graph.nodes).forEach(key => {
+            this.parents[key] = null;
+            if (a === key) {
+                this.distances[key] = 0;
+                this.queue.enqueue(0, key);
+            } else {
+                this.distances[key] = INFINITY;
+                this.queue.enqueue(INFINITY, key);                
+            }
+        });
+
+        // Processing
+        let smallest, alt;
+        while(!this.queue.isEmpty()) {
+            smallest = this.queue.dequeue();
+
+            if(smallest === b) {
+                while(this.parents[smallest]) {
+                    this.path.push(smallest);
+                    smallest = this.parents[smallest];
+                }
+
+                break;
+            }
+
+            if(!smallest || this.distances[smallest] === INFINITY){
+                continue;
+            }
+
+            for(let neighbor in this.graph.nodes[smallest]) {
+                alt = this.distances[smallest] + this.graph.nodes[smallest][neighbor];
+
+                if(alt < this.distances[neighbor]) {
+                    this.distances[neighbor] = alt;
+                    this.parents[neighbor] = smallest;
+
+                    this.queue.enqueue(alt, neighbor);
+                }
+            }
+        }
+
+        return this.path;
+    }
 }
 
-export default DijstraService;
+export default DijkstraService;

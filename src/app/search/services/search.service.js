@@ -1,6 +1,6 @@
 import Rx from 'rxjs/Rx';
 import GraphFactory from './graphFactory.service';
-import DijstraService from './dijkstra.service';
+import DijkstraService from './dijkstra.service';
 
 class SearchService {
     constructor(map) {
@@ -27,7 +27,18 @@ class SearchService {
     }
 
     processSearch(pointsModel) {
-        let graph = new GraphFactory(pointsModel);
+        pointsModel.query(points => {
+            let graphFactory = new GraphFactory();
+            let graph = graphFactory.processGraph(points);
+            console.log('graph', graph);
+            let dijkstra = new DijkstraService(graph);
+            let path = dijkstra.getPath(
+                this.points[0].layer.feature.geometry.properties._id,
+                this.points[1].layer.feature.geometry.properties._id
+            );
+
+            console.log('path', path);
+        });
     }
 
     _addMarker(marker) {
