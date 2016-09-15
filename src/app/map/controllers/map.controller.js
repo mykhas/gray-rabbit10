@@ -9,7 +9,7 @@ let markers;
 class MapController {
     constructor($resource) {
         this.pointsModel = new PointsModel($resource);
-        this.pointsModel.model.query(result => {
+        this.pointsModel.query(result => {
             markers = result;
             let geoJSONPoints = markers.map(marker => {
                 return {
@@ -30,8 +30,6 @@ class MapController {
             accessToken: 'pk.eyJ1Ijoia29iZXJueWsiLCJhIjoiY2l0MWpibXZzMDA5dTJ6bzMxMXpuazAzbCJ9.zZsFHtrmX06E80GKKoKHqg'
         }).addTo(this.map);
 
-        
-
         this.searchService = new SearchService(this.map);
 
         this.map.on('click', this.findClosestMarker.bind(this));
@@ -40,7 +38,6 @@ class MapController {
     findClosestMarker(e) {
         let latLng = e ? e.latlng : {lat: 50.45, lon: 30.52};
         let nearestPoint = leafletKnn(this.geoJSON).nearest(L.latLng(latLng), 1)[0];
-        console.log(nearestPoint);
 
         this.searchService.addPoint(nearestPoint);
     }

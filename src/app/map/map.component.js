@@ -8,6 +8,7 @@ const MapComponent = {
     template: require('./views/map.component.html'),
     bindings: {
         searchService: '=',
+        pointsModel: '=',
     },
 };
 

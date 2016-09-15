@@ -1,5 +1,3 @@
-import SearchService from '../services/search.service';
-
 class SearchController {
     constructor($scope) {
         $scope.$watch(() => this.searchService, (newVal) => {
@@ -12,8 +10,9 @@ class SearchController {
         });
     }
 
-    getPoints() {
+    calculateRoute() {
         console.log('points: ', this.points);
+        this.searchService.processSearch(this.pointsModel)
     }
 
     clear() {

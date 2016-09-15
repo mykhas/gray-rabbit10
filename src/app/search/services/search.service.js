@@ -26,8 +26,8 @@ class SearchService {
         this.subject.next(this.points);        
     }
 
-    processSearch() {
-        console.log('Search processing');
+    processSearch(pointsModel) {
+        console.log('Search processing', pointsModel);
     }
 
     _addMarker(marker) {
