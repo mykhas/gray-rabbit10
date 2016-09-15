@@ -39,23 +39,13 @@ class MapController {
         console.log(e);
         let latLng = e ? e.latlng : {lat: 50.45, lng: 30.52};
         let nearestPoint = leafletKnn(this.geoJSON).nearest(L.latLng(latLng), 1)[0];
+        let marker = this.markers.find(marker => marker._id === nearestPoint.layer.feature.geometry.properties._id);
 
-        this.searchService.addPoint(nearestPoint);
+        this.searchService.addPoint(marker);
     }
 
     selectPoint(marker) {
-        // TODO: fix this method
-        let json = {
-            type: "Point",
-            coordinates: [marker.lon, marker.lat],
-            properties: {
-                _id: marker._id,
-                title: marker.title
-            },
-        };
-        let result = leafletKnn(L.geoJson(json)).nearest(L.latLng([marker.lon, marker.lat]), 1)[0];
-
-        this.searchService.addPoint(result);
+        this.searchService.addPoint(marker);
         delete this.selectedPoint1;
         delete this.selectedPoint2;
     }
