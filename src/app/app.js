@@ -9,6 +9,7 @@ import '../../node_modules/leaflet/dist/leaflet.css';
 // Dependent components
 import MapComponent from './map/map.component'
 import SearchComponent from './search/search.component'
+import PointComponent from './point/point.component'
 
 let app = () => {
   return {
